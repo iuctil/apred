@@ -30,7 +30,6 @@
             <p>This page presents information on measuring distress indicators, economic, and demographic data for <b>{{detail.county}} County, {{detail.state}}</b>.</p>
         </div>
 
-
         <el-row :gutter="20">
             <el-col :span="5">
                 <h4>Population History<br>
@@ -423,7 +422,7 @@
             </div>
 
             <div class="measure-info" v-for="source in detail.cutter2[incode].sources.filter(s=>s.stats)" :key="source.id">
-                <p style="margin: 0">
+                <p style="margin: 0" :title="source.id">
                     <b>{{source.name}}</b>
                 </p>
 

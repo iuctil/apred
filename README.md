@@ -45,7 +45,7 @@ We have 2 sets of ETL services we run.
 
 ./transform/find_nearest_tribes.js
 ./transform/count_noaa_storms.js
-``
+```
 
 ### `backend/bin/daily.sh`
 
@@ -73,3 +73,36 @@ We have 2 sets of ETL services we run.
 The last script `counties.js` generates per-county json to be loaded by APRED UI's county detail page.
 
 Please see each script for more details.
+
+### Frontend
+
+To install the UI, simply git clone this repo, then run `npm run build` to build the deployment directory. The deployment directory can then be exposed by any static web servers (Apache, IIS, Nginx, etc..) 
+
+Th current production instance of the UI (https://ctil.iu.edu/projects/apred) is hosted by [IU sitehost](https://kb.iu.edu/d/axnv) under ctil group. 
+
+#### Accessing IU sitehost / ctil / apred deployment directory
+
+Once you login to ssh.sitehost.iu.edu and `become ctil`, you can access the deployment directory at `/groups/ctil/web/projects/apred`. The sitehost server currently runs a cron job to automatically update the content of the APRED UI if there is any update made to the apred github repo. The update script is located at `~/git/update_apred.sh` relative to the ctil group user directory. The following is the content of this script.
+
+```bash
+#!/bin/bash
+
+set -e
+
+cd apred/ui
+git reset --hard 2>&1 >/dev/null
+new=$(git pull)
+if [ ! "$new" == "Already up to date." ]
+then
+        echo $new
+        npm i
+        npm run build
+        rsync -av dist/ /groups/ctil/web/projects/apred
+fi
+
+```
+
+In order to *move* the UI to another webserver, you can simply run another instance of the APRED UI on another webserver, and point to the same backend hosted at IBRC. The existing UI can simply removed (and setup a redirct the new URL?) 
+
+
+
