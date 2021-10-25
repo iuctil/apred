@@ -76,7 +76,7 @@ Please see each script for more details.
 
 ### Frontend
 
-To install the UI, simply git clone this repo, then run `npm run build` to build the deployment directory. The deployment directory can then be exposed by any static web servers (Apache, IIS, Nginx, etc..) 
+To install the UI, simply git clone this repo, then run `cd ui && npm run build` to build the deployment directory. The deployment directory can then be exposed by any static web servers (Apache, IIS, Nginx, etc..). You might need to adjust the content of `ui/vue.config.js` to set the correct base path.
 
 Th current production instance of the UI (https://ctil.iu.edu/projects/apred) is hosted by [IU sitehost](https://kb.iu.edu/d/axnv) under ctil group. 
 
